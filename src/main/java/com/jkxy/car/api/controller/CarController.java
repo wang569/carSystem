@@ -85,4 +85,35 @@ public class CarController {
         carService.insertCar(car);
         return JSONResult.ok();
     }
+
+    /**
+     * 通过车辆名称购买车辆
+     * @param carName
+     * @param purchaseNum
+     * @return
+     */
+    @PostMapping("purchaseCar")
+    public JSONResult purchaseCar(String carName,int purchaseNum){
+        boolean result = carService.purchaseCar(carName, purchaseNum);
+        return result?JSONResult.ok():JSONResult.errorException("库存不足，不支持购买");
+    }
+
+    /**
+     * 根据品牌模糊查询
+     * @param carName 车辆名称
+     * @return
+     */
+    /**
+     * 根据品牌模糊分页查询
+     * @param carName 车辆名称
+     * @param pageNo 查询页数
+     * @param pageSize 每页大小
+     * @return
+     */
+    @GetMapping("queryLikeCarName")
+    public JSONResult queryByCarName(@RequestParam String carName,@RequestParam int pageNo,
+                                     @RequestParam int pageSize){
+        List<Car> cars = carService.queryLikeCarName(carName,pageNo, pageSize);
+        return JSONResult.ok(cars);
+    }
 }

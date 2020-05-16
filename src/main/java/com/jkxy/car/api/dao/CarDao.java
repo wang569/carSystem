@@ -20,9 +20,12 @@ public interface CarDao {
     @Delete("delete from carMessage where id = #{id}")
     void deleteById(int id);
 
-    @Update("update carMessage set carName=#{carName},carType=#{carType},price=#{price},carSeries=#{carSeries} where id = #{id}")
+    @Update("update carMessage set carName=#{carName},carType=#{carType},price=#{price},carSeries=#{carSeries},stockQty=#{stockQty} where id = #{id}")
     void updateById(Car car);
 
-    @Insert("insert into carMessage(carName,carType,price,carSeries) values(#{carName},#{carType},#{price},#{carSeries})")
+    @Insert("insert into carMessage(carName,carType,price,carSeries,stockQty) values(#{carName},#{carType},#{price},#{carSeries},#{stockQty})")
     void insertCar(Car car);
+
+    @Select("select * from carMessage where carName like CONCAT('%',#{carName},'%') limit #{startIndex}, #{pageSize}")
+    List<Car> queryLikeCarName(String carName, int startIndex, int pageSize);
 }
